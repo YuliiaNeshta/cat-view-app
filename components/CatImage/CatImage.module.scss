@@ -1,0 +1,51 @@
+.wrapper {
+  position: relative;
+  border-radius: 1.25rem;
+  width: 12.5rem;
+  height: 8.75rem;
+  cursor: pointer;
+  &:hover{
+    & .overlay{
+      opacity: 1;
+    }
+  }
+}
+
+.overlay{
+  position: absolute;
+  background: rgba(255, 134, 142, 0.60);
+  padding: 0.62rem;
+  inset: 0;
+  display: flex;
+  justify-content: stretch;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 1.25rem;
+}
+
+.picture{
+  display: block;
+  object-fit: cover;
+  flex-shrink: 0;
+  width: 12.5rem;
+  height: 8.75rem;
+  border-radius: 1.25rem;
+}
+
+.breed{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.3rem 1rem;
+  border-radius: 0.625rem;
+  background: #FFF;
+  height: 2.125rem;
+  color: #FF868E;
+  text-align: center;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  margin-top: auto;
+  width: 100%;
+}

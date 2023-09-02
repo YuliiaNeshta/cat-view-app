@@ -1,0 +1,58 @@
+.card{
+  border-radius: 1.25rem;
+  border: 2px solid #FBE0DC;
+  padding: 1.62rem 2.5rem 2.5rem 2.5rem;
+}
+
+.slider{
+
+}
+
+.breedId{
+  color: #FFF;
+  text-align: center;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: 0.125rem;
+  border-radius: 0.625rem;
+  background: #FF868E;
+}
+
+.grid{
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.breed{
+  color: #1D1D1D;
+  font-size: 2.25rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  background-color: #FFFFFF;
+  border-radius: 1.25rem;
+  height: 3.875rem;
+}
+
+.description{
+  color: #8C8C8C;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-align: center;
+}
+
+.category{
+  color: #8C8C8C;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.categoryName{
+  color: #1D1D1D;
+}
