@@ -45,8 +45,9 @@ export const breedsApi = createApi({
       }),
       invalidatesTags: ['Vote'],
     }),
-    getFavourites: builder.query({
+    getFavourites: builder.query<IFavourite>({
       query: ({ limit, sub_id, order }) => `/favourites?limit=${limit}&sub_id=${sub_id}&order=${order}`,
+      providesTags: result => ['Favourite'],
     }),
     addFavourite: builder.mutation<IFavourite>({
       query: body => ({
@@ -56,10 +57,24 @@ export const breedsApi = createApi({
       }),
       invalidatesTags: ['Favourite'],
     }),
+    deleteFavourite: builder.mutation<IFavourite>({
+      query: id => ({
+        url: `/favourites/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Favourite'],
+    }),
   }),
 });
 
 //https://api.thecatapi.com/v1/images/search?breed_ids=aege&limit=8
 
-export const { useGetBreedsQuery, useUploadPhotoMutation, useGetPhotosQuery, useGetVotesQuery, useAddVoteMutation } =
-  breedsApi;
+export const {
+  useGetBreedsQuery,
+  useUploadPhotoMutation,
+  useGetPhotosQuery,
+  useGetVotesQuery,
+  useAddVoteMutation,
+  useAddFavouriteMutation,
+  useDeleteFavouriteMutation,
+} = breedsApi;
