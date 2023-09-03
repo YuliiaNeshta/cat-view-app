@@ -25,11 +25,12 @@ const Breed: FC<Props> = ({ params: { breed } }) => {
   return (
     <>
       <Slider>
-        {breedsData.map((item, _index) => (
-          <SwiperSlide key={_index}>
-            <img src={item.url} />
-          </SwiperSlide>
-        ))}
+        {breedsData &&
+          breedsData.map((item, _index) => (
+            <SwiperSlide key={_index}>
+              <img src={item.url} />
+            </SwiperSlide>
+          ))}
       </Slider>
       <CatInfoCard
         id={breed}

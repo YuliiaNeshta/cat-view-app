@@ -1,9 +1,9 @@
-const VoteButtons = () => {
+const VoteButtons = ({ onLike, onDislike }) => {
   return (
     <div>
-      <button>like</button>
+      <button onClick={onLike}>like</button>
       <button>heart</button>
-      <button>dislike</button>
+      <button onClick={onDislike}>dislike</button>
     </div>
   );
 };

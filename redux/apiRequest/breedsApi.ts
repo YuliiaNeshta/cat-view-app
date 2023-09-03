@@ -1,83 +1,65 @@
+import { IBreed } from '@/providers/models/IBreed';
+import { IFavourite } from '@/providers/models/IFavourite';
+import { IVote } from '@/providers/models/IVote';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-// interface Breed {
-//   id: string;
-//   name: string;
-//   // ... другие поля
-// }
-//
-// interface Photo {
-//   id: string;
-//   url: string;
-//   // ... другие поля
-// }
-//
-// export const breedsApi = createApi({
-//   reducerPath: 'breedsApi',
-//   baseQuery: fetchBaseQuery({
-//     baseUrl: 'https://api.thecatapi.com/v1/',
-//     prepareHeaders: (headers, { getState }) => {
-//       headers.set('x-api-key', process.env.API_KEY as string);
-//       return headers;
-//     },
-//   }),
-//   endpoints: builder => ({
-//     getBreeds: builder.query<Breed[], string>({
-//       query: (limit = '') => `breeds?${limit && `limit=${limit}`}`,
-//     }),
-//     getPhotos: builder.query<Photo[], { breedId: string; limit?: string }>({
-//       query: ({ breedId = '', limit = '' }) => `/images/search?breed_ids=${breedId}&limit=${limit}`,
-//     }),
-//     uploadPhoto: builder.mutation<void, FormData>({
-//       query: body => ({
-//         url: 'images/upload',
-//         method: 'POST',
-//         body,
-//       }),
-//     }),
-//   }),
-// });
-//
-// export const { useGetBreedsQuery, useUploadPhotoMutation, useGetPhotosQuery } = breedsApi;
-//
-// import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+interface PhotoType {
+  breedId: string;
+  limit: string;
+}
 
 export const breedsApi = createApi({
   reducerPath: 'breedsApi',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://api.thecatapi.com/v1/',
     prepareHeaders: (headers, { getState }) => {
-      headers.set('x-api-key', 'live_ODue7PFE7tXtCH4aqqkRwDrVcivLCOgrbtqiEyu256McIZBAg7qfbyX2yRXd42mH');
+      headers.set('x-api-key', process.env.NEXT_PUBLIC_API_KEY as string);
       return headers;
     },
   }),
+  tagTypes: ['Vote', 'Favourite'],
   endpoints: builder => ({
-    getBreeds: builder.query({
+    getBreeds: builder.query<IBreed[], string>({
       query: (limit = '') => `breeds?${limit && `limit=${limit}`}`,
     }),
-    getPhotos: builder.query({
-      query: ({ breedId, limit }) => `/images/search?breed_ids=${breedId}&limit=${limit}`,
+    getPhotos: builder.query<IBreed[], PhotoType>({
+      query: ({ breedId, limit }) => `/images/search?${breedId && `breed_ids=${breedId}`}&limit=${limit}`,
+      providesTags: result => ['Vote'],
     }),
     getVotes: builder.query({
-      query: ({ order, limit }) => `/votes`,
+      query: (limit = '') => `/votes?limit=${limit}&order=DESC`,
+      providesTags: result => ['Vote'],
     }),
     uploadPhoto: builder.mutation({
-      query: body => ({
+      query: photo => ({
         url: 'images/upload',
         method: 'POST',
-        body,
+        body: photo,
       }),
     }),
-    addVote: builder.mutation({
+    addVote: builder.mutation<IVote>({
       query: body => ({
         url: '/votes',
         method: 'POST',
         body,
       }),
+      invalidatesTags: ['Vote'],
+    }),
+    getFavourites: builder.query({
+      query: ({ limit, sub_id, order }) => `/favourites?limit=${limit}&sub_id=${sub_id}&order=${order}`,
+    }),
+    addFavourite: builder.mutation<IFavourite>({
+      query: body => ({
+        url: '/favourites',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Favourite'],
     }),
   }),
 });
 
 //https://api.thecatapi.com/v1/images/search?breed_ids=aege&limit=8
 
-export const { useGetBreedsQuery, useUploadPhotoMutation, useGetPhotosQuery } = breedsApi;
+export const { useGetBreedsQuery, useUploadPhotoMutation, useGetPhotosQuery, useGetVotesQuery, useAddVoteMutation } =
+  breedsApi;

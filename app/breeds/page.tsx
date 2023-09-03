@@ -40,12 +40,13 @@ export default function Breeds() {
       </select>
       <SelectBreeds />
       <div className={styles.wrapper}>
-        {breedsData.map(breed => (
-          <Link href={`/breeds/${breed.id}`} key={breed.id} className={styles.card}>
-            <div>{breed.name}</div>
-            <CatImage breedId={breed.id} breedName={breed.name} isLiked={false} />
-          </Link>
-        ))}
+        {breedsData &&
+          breedsData.map(breed => (
+            <Link href={`/breeds/${breed.id}`} key={breed.id} className={styles.card}>
+              <div>{breed.name}</div>
+              <CatImage breedId={breed.id} breedName={breed.name} isLiked={false} />
+            </Link>
+          ))}
       </div>
     </div>
   );
